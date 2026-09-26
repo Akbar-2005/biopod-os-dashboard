@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioPod OS • Smart IoT Agro-Preservation Dashboard</title>
+  <meta name="description"
+    content="Next-Generation Smart Micro-Cold Storage & Agro-Preservation IoT Dashboard powered by ESP32, Agri-AI intelligence, and Hybrid Renewable Microgrid with North Eastern Regional Language Support.">
+
+  <!-- Fonts & Icons with Indian Regional Script Support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Ambient Glow Effect -->
+  <div class="bg-ambient-glow"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Top App Header -->
+  <header class="top-header">
+    <div class="brand-wrapper">
+      <div class="brand-emblem-badge">
+        <img src="assets/logo.png" alt="Solar BioPod Logo">
+      </div>
+      <div class="brand-details">
+        <div class="brand-title">
+          <span data-i18n="app_title">SOLAR BIOPOD</span> <span class="version-tag" data-i18n="app_version">NEXORA OS</span>
+        </div>
+        <div class="brand-subtitle" data-i18n="app_subtitle">
+          Smart Agri-Cold Storage • NER
+        </div>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Regional Language Selector Button -->
+      <button class="btn-lang-pill" onclick="openLanguageModal()" title="North Eastern Regional Languages (অসমীয়া, Khasi, Garo, Manipuri, Mizo, etc.)" id="btn-language" data-i18n-title="btn_regional_lang">
+        <span class="material-symbols-outlined text-primary">translate</span>
+        <span class="lang-pill-text" id="current-lang-code">EN</span>
+      </button>
+
+      <!-- Stress Test Scenario Launcher -->
+      <button class="btn-icon" onclick="openScenarioModal()" title="Simulate Stress Scenarios" id="btn-scenarios" data-i18n-title="btn_scenarios">
+        <span class="material-symbols-outlined text-tertiary">bolt</span>
+      </button>
+
+      <!-- Hardware Self-Test Diagnostics -->
+      <button class="btn-icon" onclick="runSelfTest()" title="Run Hardware Diagnostics" id="btn-selftest" data-i18n-title="btn_selftest">
+        <span class="material-symbols-outlined text-secondary">fact_check</span>
+      </button>
+
+      <!-- Audio Synth Feedback Toggle -->
+      <button class="btn-icon" onclick="toggleSound()" title="Toggle Interface Audio" id="btn-sound" data-i18n-title="btn_sound">
+        <span class="material-symbols-outlined text-primary" id="sound-toggle-icon">volume_up</span>
+      </button>
+
+      <!-- Theme Switcher (BioPod OS Obsidian vs Lumina Bio-OS Laboratory) -->
+      <button class="btn-icon" onclick="toggleTheme()" title="Switch Light/Dark Mode" id="btn-theme" data-i18n-title="btn_theme">
+        <span class="material-symbols-outlined" id="theme-toggle-icon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- Live ESP32 Node Status Banner -->
+    <section class="glass-panel node-status-bar">
+      <div class="node-info-block">
+        <h2>BioPod-NER-04</h2>
+        <div class="node-meta">
+          <span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+          <span id="node-location-label" data-i18n="node_location">Khasi Hills, Meghalaya • High-Altitude Node</span>
+        </div>
+      </div>
+
+      <div class="node-pills-wrap">
+        <div class="status-badge" id="esp32-badge">
+          <div class="pulse-pip"></div>
+          <span id="esp32-ping">ESP32 Online • 45ms</span>
+        </div>
+        <div class="status-badge bg-secondary/10 border-secondary/30 text-secondary" id="esp32-packets">
+          Packets: 1420 RX / 1419 TX
+        </div>
+      </div>
+
+      <div class="auto-ai-toggle-box">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span class="material-symbols-outlined text-secondary">psychology</span>
+          <span style="font-family:var(--font-mono); font-size:12px; font-weight:600;" data-i18n="auto_ai_mode">Auto AI Mode</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="auto-ai-toggle" checked onchange="toggleAutoAi()">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: AI CONTROL HUB (MAIN DASHBOARD) -->
+    <!-- ========================================================================= -->
+    <div id="tab-ai-control" class="tab-content active">
+
+      <!-- Energy Hub Quick Status -->
+      <div class="section-label">
+        <span class="material-symbols-outlined text-[16px] text-tertiary">offline_bolt</span>
+        <span data-i18n="sec_energy_telemetry">Hybrid Microgrid Power Telemetry</span>
+      </div>
+
+      <section class="energy-cards-grid" style="margin-bottom: 20px;">
+        <!-- Battery Card -->
+        <div class="glass-panel energy-stat-card">
+          <div class="energy-card-header">
+            <div class="energy-icon-title text-primary">
+              <span class="material-symbols-outlined">battery_charging_full</span>
+              <span data-i18n="card_battery">BATTERY BANK</span>
+            </div>
+            <span id="battery-status-tag"
+              class="bg-tertiary/20 text-tertiary font-mono text-[10px] px-2 py-0.5 rounded border border-tertiary/30" data-i18n="status_discharging">DISCHARGING</span>
+          </div>
+          <div class="sensor-val" style="text-align:left; margin-top:2px;">
+            <span id="battery-soc-val">78</span><span class="unit">%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="battery-progress-bar" class="progress-bar-fill bg-primary"
+              style="width: 78%; box-shadow: 0 0 10px rgba(var(--primary-rgb),0.5);"></div>
+          </div>
+          <div class="flex-between" style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);">
+            <span id="battery-meta-val">51.2V / 4.2A</span>
+            <span id="battery-backup-val">14.2h Backup Remaining</span>
+          </div>
+        </div>
+
+        <!-- Solar Array Card -->
+        <div class="glass-panel energy-stat-card">
+          <div class="energy-card-header">
+            <div class="energy-icon-title text-tertiary">
+              <span class="material-symbols-outlined">solar_power</span>
+              <span data-i18n="card_solar">SOLAR ARRAY</span>
+            </div>
+            <span
+              class="bg-primary/10 text-primary font-mono text-[10px] px-2 py-0.5 rounded border border-primary/20" data-i18n="status_mppt">MPPT
+              TRACKING</span>
+          </div>
+          <div class="sensor-val" style="text-align:left; margin-top:2px;">
+            <span id="solar-power-val">165</span><span class="unit">W</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 65%; background:var(--tertiary);"></div>
+          </div>
+          <div class="flex-between" style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);">
+            <span id="solar-meta-val">18.2V / 9.06A</span>
+            <span id="solar-irr-val">850 W/m² Irr</span>
+          </div>
+        </div>
+
+        <!-- Micro-Hydro Card -->
+        <div class="glass-panel energy-stat-card">
+          <div class="energy-card-header">
+            <div class="energy-icon-title text-secondary">
+              <span class="material-symbols-outlined">water_drop</span>
+              <span data-i18n="card_hydro">MICRO-HYDRO</span>
+            </div>
+            <span
+              class="bg-secondary/10 text-secondary font-mono text-[10px] px-2 py-0.5 rounded border border-secondary/20" data-i18n="status_torpid">REGULATED FLOW</span>
+          </div>
+          <div class="sensor-val" style="text-align:left; margin-top:2px;">
+            <span id="hydro-power-val">85</span><span class="unit">W</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill bg-secondary"
+              style="width: 55%; box-shadow:0 0 10px rgba(var(--secondary-rgb),0.5);"></div>
+          </div>
+          <div class="flex-between" style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);">
+            <span>12V DC Regulated</span>
+            <span id="hydro-flow-val">45.0 L/min Flow</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Dashboard 2-Column Grid -->
+      <div class="dashboard-grid dashboard-grid-main">
+
+        <!-- Left Column: AI Crop Intelligence -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="section-label">
+            <span class="material-symbols-outlined text-[16px] text-primary">psychology</span>
+            <span data-i18n="sec_crop_engine">Agri-AI Crop Intelligence Engine</span>
+          </div>
+
+          <div class="glass-panel glass-panel-primary" style="padding: 20px;">
+            <div class="crop-preview-row">
+              <img id="crop-preview-img" src="assets/potato.png" alt="Active Crop Profile" class="crop-image-thumb">
+              <div style="flex:1;">
+                <div
+                  style="font-family:var(--font-mono); font-size:11px; color:var(--primary); font-weight:700; text-transform:uppercase;"
+                  id="crop-category-tag">Tubers & Roots</div>
+                <h3
+                  style="font-family:var(--font-display); font-size:20px; font-weight:700; color:var(--text-main); margin-top:2px;"
+                  id="crop-name-display">Organic Seed Potato</h3>
+                <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:2px;"
+                  id="crop-origin-tag">Tawang, Arunachal Pradesh</div>
+              </div>
+            </div>
+
+            <!-- Selector Dropdown -->
+            <div class="crop-dropdown-wrap">
+              <label class="section-label" style="margin-bottom:6px;" data-i18n="label_select_crop">SELECT CROP PRESERVATION PROFILE</label>
+              <select id="crop-selector" class="crop-select" onchange="selectCrop(this.value)">
+                <option value="potato" selected>🥔 Organic Seed Potato (Tawang, Arunachal)</option>
+                <option value="naga_chilli">🌶️ Naga King Chilli / Bhut Jolokia (Nagaland)</option>
+                <option value="mushroom">🍄 Oyster Mushroom / Pleurotus (Shillong, Meghalaya)</option>
+                <option value="cabbage">🥬 Fresh Green Cabbage (Khasi Hills, Meghalaya)</option>
+                <option value="tomato">🍅 Ripe Red Tomatoes (Barapani Valley)</option>
+                <option value="ginger">🫚 Fresh Raw Ginger / Nadia (Karbi Anglong, Assam)</option>
+              </select>
+              <span class="material-symbols-outlined icon-chevron">expand_more</span>
+            </div>
+
+            <!-- Dual Action Row: Predict with AI + Agri-Voice Assist -->
+            <div class="crop-actions-row" style="display:flex; gap:10px; margin-top:14px;">
+              <button class="btn-secondary" style="flex:1;" onclick="openAgriAiModal()" id="btn-predict-ai" data-i18n="btn_predict_ai">
+                <span class="material-symbols-outlined">psychology</span>
+                <span class="i18n-text">PREDICT WITH AGRI-AI MODEL</span>
+              </button>
+              
+              <button class="btn-voice-crop" onclick="speakCurrentCropAdvisory()" title="Listen to Crop Advisory in Regional Language" id="btn-voice-crop">
+                <span class="material-symbols-outlined text-primary">volume_up</span>
+                <span data-i18n="btn_voice_assist">VOICE ASSIST</span>
+              </button>
+            </div>
+
+            <!-- AI Recommendation Readout Box -->
+            <div class="ai-matrix-grid">
+              <div class="ai-matrix-item">
+                <div class="ai-matrix-val text-primary" id="ai-rec-temp">4.0°C</div>
+                <div class="ai-matrix-label" data-i18n="ai_optimal_temp">OPTIMAL TEMP</div>
+              </div>
+              <div class="ai-matrix-item">
+                <div class="ai-matrix-val text-secondary" id="ai-rec-rh">90%</div>
+                <div class="ai-matrix-label" data-i18n="ai_target_rh">TARGET RH</div>
+              </div>
+              <div class="ai-matrix-item">
+                <div class="ai-matrix-val text-tertiary" id="ai-rec-shelf">+120d</div>
+                <div class="ai-matrix-label" data-i18n="ai_shelf_life">SHELF LIFE</div>
+              </div>
+            </div>
+
+            <p id="crop-bio-notes"
+              style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:16px;">
+              Rhizome dormancy mode active. Solanine greening prevented via zero-light dark storage and strictly
+              regulated skin curing humidity.
+            </p>
+
+            <!-- Push Setpoints to ESP32 Button -->
+            <button class="btn-primary" onclick="pushSetpointsToESP32()" id="btn-push-esp32" data-i18n="btn_push_esp32">
+              <span class="material-symbols-outlined">send</span>
+              <span class="i18n-text">PUSH SETPOINTS TO ESP32</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Chamber Vitals & Actuator Rack -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+
+          <div class="section-label">
+            <span class="material-symbols-outlined text-[16px] text-secondary">sensors</span>
+            <span data-i18n="sec_sensors">Chamber Atmospheric Sensors</span>
+          </div>
+
+          <div class="sensors-grid">
+            <!-- Temperature Gauge -->
+            <div class="glass-panel sensor-metric-card">
+              <span class="material-symbols-outlined sensor-icon text-tertiary">thermostat</span>
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_temp">
+                TEMPERATURE</div>
+              <div class="sensor-val text-main"><span id="live-temp-val">4.8</span><span class="unit">°C</span></div>
+              <div class="sensor-target-tag text-tertiary" id="live-target-temp-label">Target: 4.0°C</div>
+            </div>
+
+            <!-- Humidity Gauge -->
+            <div class="glass-panel sensor-metric-card">
+              <span class="material-symbols-outlined sensor-icon text-secondary">humidity_mid</span>
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_rh">
+                HUMIDITY (RH)</div>
+              <div class="sensor-val text-main"><span id="live-rh-val">84</span><span class="unit">%</span></div>
+              <div class="sensor-target-tag text-secondary" id="live-target-rh-label">Target: 90%</div>
+            </div>
+
+            <!-- Ethylene Sensor -->
+            <div class="glass-panel sensor-metric-card">
+              <span class="material-symbols-outlined sensor-icon text-primary">air</span>
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_ethylene">
+                ETHYLENE (C2H4)</div>
+              <div class="sensor-val text-main"><span id="live-ethylene-val">0.12</span><span class="unit">ppm</span>
+              </div>
+              <div class="sensor-target-tag text-primary" data-i18n="cond_normal">Normal &lt; 0.5 ppm</div>
+            </div>
+
+            <!-- CO2 Sensor -->
+            <div class="glass-panel sensor-metric-card">
+              <span class="material-symbols-outlined sensor-icon text-muted">co2</span>
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_co2">CO2
+                LEVEL</div>
+              <div class="sensor-val text-main"><span id="live-co2-val">680</span><span class="unit">ppm</span></div>
+              <div class="sensor-target-tag text-muted" data-i18n="cond_optimal">Optimal Range</div>
+            </div>
+          </div>
+
+          <!-- Actuators Summary Rack -->
+          <div class="glass-panel" style="padding:18px 20px;">
+            <div class="section-label" style="margin-bottom:10px;">
+              <span class="material-symbols-outlined text-[16px] text-primary">tune</span>
+              <span data-i18n="sec_actuators">Actuators & Relays</span>
+            </div>
+
+            <!-- Compressor -->
+            <div class="actuator-row">
+              <div class="actuator-info">
+                <span class="material-symbols-outlined text-primary">mode_fan</span>
+                <div>
+                  <div style="font-family:var(--font-mono); font-size:13px; font-weight:600;" data-i18n="actuator_compressor">Compressor / Chiller</div>
+                  <div style="font-size:11px; color:var(--text-muted);" data-i18n="actuator_compressor_sub">Inverter Brushless DC</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span id="compressor-status-tag" class="actuator-badge bg-primary/10 text-primary">ON - 65%</span>
+                <label class="switch">
+                  <input type="checkbox" id="compressor-toggle" checked onchange="toggleActuator('compressor')">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Humidifier -->
+            <div class="actuator-row">
+              <div class="actuator-info">
+                <span class="material-symbols-outlined text-secondary">water_drop</span>
+                <div>
+                  <div style="font-family:var(--font-mono); font-size:13px; font-weight:600;" data-i18n="actuator_humidifier">Ultrasonic Misting
+                    Humidifier</div>
+                  <div style="font-size:11px; color:var(--text-muted);" data-i18n="actuator_humidifier_sub">Piezo Transducer 1.7MHz</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span id="humidifier-status-tag" class="actuator-badge bg-secondary/10 text-secondary">MIST - 80%</span>
+                <label class="switch">
+                  <input type="checkbox" id="humidifier-toggle" checked onchange="toggleActuator('humidifier')">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Cross-Flow Fan -->
+            <div class="actuator-row">
+              <div class="actuator-info">
+                <span class="material-symbols-outlined text-tertiary">air</span>
+                <div>
+                  <div style="font-family:var(--font-mono); font-size:13px; font-weight:600;" data-i18n="actuator_fans">Internal Circulation Fans
+                  </div>
+                  <div style="font-size:11px; color:var(--text-muted);" data-i18n="actuator_fans_sub">Dual Cross-Flow Aerators</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span id="fan-status-tag" class="actuator-badge bg-tertiary/10 text-tertiary">1200 RPM</span>
+                <label class="switch">
+                  <input type="checkbox" id="fan-toggle" checked onchange="toggleActuator('fan')">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Ethylene Scrubber -->
+            <div class="actuator-row">
+              <div class="actuator-info">
+                <span class="material-symbols-outlined text-muted">filter_alt</span>
+                <div>
+                  <div style="font-family:var(--font-mono); font-size:13px; font-weight:600;" data-i18n="actuator_scrubber">UV-C Ethylene Scrubber
+                  </div>
+                  <div style="font-size:11px; color:var(--text-muted);" data-i18n="actuator_scrubber_sub">TiO2 Catalytic Reactor</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span id="scrubber-status-tag" class="actuator-badge bg-white/5 text-muted" data-i18n="status_idle">IDLE</span>
+                <label class="switch">
+                  <input type="checkbox" id="scrubber-toggle" onchange="toggleActuator('scrubber')">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: CLIMATE & TELEMETRY HUB -->
+    <!-- ========================================================================= -->
+    <div id="tab-climate" class="tab-content">
+      <div class="section-label">
+        <span class="material-symbols-outlined text-[16px] text-primary">show_chart</span>
+        <span data-i18n="sec_climate_telemetry">Real-Time Chamber Environmental Telemetry</span>
+      </div>
+
+      <!-- Advanced Microclimate Sensor Matrix -->
+      <section class="sensors-grid sensors-grid-4" style="margin-bottom: 20px;">
+        <div class="glass-panel sensor-metric-card">
+          <span class="material-symbols-outlined text-tertiary">thermostat</span>
+          <span
+            style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_temp">TEMPERATURE</span>
+          <div class="sensor-val"><span id="live-temp-val2">4.8</span><span class="unit">°C</span></div>
+          <span class="sensor-target-tag text-tertiary">Target 4.0°C</span>
+        </div>
+
+        <div class="glass-panel sensor-metric-card">
+          <span class="material-symbols-outlined text-secondary">humidity_mid</span>
+          <span
+            style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_rh">HUMIDITY</span>
+          <div class="sensor-val"><span id="live-rh-val2">84</span><span class="unit">%</span></div>
+          <span class="sensor-target-tag text-secondary">Target 90%</span>
+        </div>
+
+        <div class="glass-panel sensor-metric-card">
+          <span class="material-symbols-outlined text-primary">water_drop</span>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_dew">DEW
+            POINT</span>
+          <div class="sensor-val"><span id="live-dew-val">2.3</span><span class="unit">°C</span></div>
+          <span class="sensor-target-tag text-primary" data-i18n="cond_no_dew">No condensation</span>
+        </div>
+
+        <div class="glass-panel sensor-metric-card">
+          <span class="material-symbols-outlined text-secondary">grain</span>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-muted);" data-i18n="sensor_vpd">VAPOR
+            DEFICIT (VPD)</span>
+          <div class="sensor-val"><span id="live-vpd-val">0.14</span><span class="unit">kPa</span></div>
+          <span class="sensor-target-tag text-secondary" data-i18n="cond_transpiration">Transpiration Safe</span>
+        </div>
+      </section>
+
+      <!-- Live Streaming Climate Chart -->
+      <div class="glass-panel" style="padding:20px; margin-bottom:20px;">
+        <div class="flex-between">
+          <div class="section-label" style="margin:0;">
+            <span class="material-symbols-outlined text-[16px] text-primary">timeline</span>
+            <span data-i18n="sec_chart_history">Live Stream Sensor History (1Hz Real-Time)</span>
+          </div>
+          <div
+            style="font-family:var(--font-mono); font-size:11px; color:var(--primary); background:rgba(var(--primary-rgb),0.1); padding:2px 8px; border-radius:var(--radius-full);" data-i18n="tag_streaming">
+            STREAMING
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="climateChartCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Advanced Hardware Control Sliders -->
+      <div class="dashboard-grid dashboard-grid-2col">
+        <div class="glass-panel" style="padding:20px;">
+          <div class="section-label">
+            <span class="material-symbols-outlined text-[16px] text-primary">speed</span>
+            <span data-i18n="sec_speed_controls">Chamber Speed & Power Modulations</span>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div class="flex-between" style="font-family:var(--font-mono); font-size:12px; margin-bottom:6px;">
+              <span data-i18n="label_comp_capacity">Compressor Inverter Capacity</span>
+              <span id="compressor-slider-val" class="text-primary font-bold">65%</span>
+            </div>
+            <input type="range" min="20" max="100" value="65"
+              oninput="setActuatorSpeed('compressor', this.value); setText('compressor-slider-val', this.value + '%')">
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div class="flex-between" style="font-family:var(--font-mono); font-size:12px; margin-bottom:6px;">
+              <span data-i18n="label_humid_duty">Humidifier Mist Duty Cycle</span>
+              <span id="humidifier-slider-val" class="text-secondary font-bold">80%</span>
+            </div>
+            <input type="range" min="0" max="100" value="80"
+              oninput="setActuatorSpeed('humidifier', this.value); setText('humidifier-slider-val', this.value + '%')">
+          </div>
+
+          <div>
+            <div class="flex-between" style="font-family:var(--font-mono); font-size:12px; margin-bottom:6px;">
+              <span data-i18n="label_fan_speed">Circulation Fan Velocity</span>
+              <span id="fan-slider-val" class="text-tertiary font-bold">1200 RPM</span>
+            </div>
+            <input type="range" min="600" max="2400" step="100" value="1200"
+              oninput="setFanRPM(this.value); setText('fan-slider-val', this.value + ' RPM')">
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding:20px;">
+          <div class="section-label">
+            <span class="material-symbols-outlined text-[16px] text-tertiary">heat_pump</span>
+            <span data-i18n="sec_thermal_defrost">Maintenance & Thermal Defrost Cycle</span>
+          </div>
+
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;" data-i18n="desc_thermal_defrost">
+            BioPod evaporator coils utilize automatic low-energy resistive heating to prevent ice buildup without
+            disturbing chamber core temperatures.
+          </p>
+
+          <button class="btn-secondary" style="border-color:var(--tertiary); color:var(--tertiary); margin-bottom:12px;"
+            onclick="triggerDefrost()" data-i18n="btn_trigger_defrost">
+            <span class="material-symbols-outlined">heat_pump</span>
+            <span class="i18n-text">TRIGGER 45s DEFROST PULSE</span>
+          </button>
+
+          <div class="flex-between"
+            style="font-family:var(--font-mono); font-size:12px; padding:10px; background:var(--bg-surface-high); border-radius:var(--radius-md);">
+            <span data-i18n="label_chamber_pressure">Chamber Internal Pressure</span>
+            <span class="text-secondary font-bold">1013.2 hPa (<span data-i18n="nominal_label">Nominal</span>)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: ENERGY HUB & MICROGRID POWER FLOW -->
+    <!-- ========================================================================= -->
+    <div id="tab-energy" class="tab-content">
+      <div class="section-label">
+        <span class="material-symbols-outlined text-[16px] text-tertiary">power</span>
+        <span data-i18n="sec_tri_microgrid">Tri-Source Hybrid Microgrid (Solar + Hydro + Battery)</span>
+      </div>
+
+      <!-- Power Circuit Flow Diagram -->
+      <div class="power-flow-container" style="margin-bottom:20px;">
+        <div class="flex-between">
+          <div style="font-family:var(--font-display); font-size:16px; font-weight:700;" data-i18n="label_circuit_routing">Live Energy Routing Circuit
+          </div>
+          <div
+            style="font-family:var(--font-mono); font-size:11px; color:var(--primary); display:flex; align-items:center; gap:6px;">
+            <div class="pulse-pip"></div>
+            <span data-i18n="label_microgrid_sync">MICROGRID SYNCHRONIZED</span>
+          </div>
+        </div>
+
+        <!-- Animated SVG Circuit Lines -->
+        <svg class="flow-circuit-svg" viewBox="0 0 800 90">
+          <!-- Background Paths -->
+          <path d="M 100 45 L 300 45" class="flow-path"></path>
+          <path d="M 300 45 L 500 45" class="flow-path"></path>
+          <path d="M 500 45 L 700 45" class="flow-path"></path>
+
+          <!-- Active Animated Current Flow Paths -->
+          <path d="M 100 45 L 300 45" class="flow-path-solar"></path>
+          <path d="M 300 45 L 500 45" class="flow-path-active"></path>
+          <path d="M 500 45 L 700 45" class="flow-path-active"></path>
+
+          <!-- Node Points -->
+          <circle cx="100" cy="45" r="7" fill="var(--tertiary)"></circle>
+          <circle cx="300" cy="45" r="7" fill="var(--secondary)"></circle>
+          <circle cx="500" cy="45" r="7" fill="var(--primary)"></circle>
+          <circle cx="700" cy="45" r="7" fill="var(--secondary)"></circle>
+        </svg>
+
+        <!-- Node Labels Grid -->
+        <div class="circuit-grid">
+          <div class="flow-node-box">
+            <span class="material-symbols-outlined text-tertiary">solar_power</span>
+            <span style="color:var(--text-muted);" data-i18n="node_solar_pv">Solar PV Array</span>
+            <span class="node-power text-tertiary" id="solar-power-val2">165W</span>
+          </div>
+
+          <div class="flow-node-box">
+            <span class="material-symbols-outlined text-secondary">water_drop</span>
+            <span style="color:var(--text-muted);" data-i18n="node_micro_hydro">Micro-Hydro Turbine</span>
+            <span class="node-power text-secondary" id="hydro-power-val2">85W</span>
+          </div>
+
+          <div class="flow-node-box">
+            <span class="material-symbols-outlined text-primary">battery_charging_full</span>
+            <span style="color:var(--text-muted);" data-i18n="node_battery_bank">LiFePO4 Battery Bank</span>
+            <span class="node-power text-primary" id="battery-soc-val2">78% (51.2V)</span>
+          </div>
+
+          <div class="flow-node-box">
+            <span class="material-symbols-outlined text-secondary">ac_unit</span>
+            <span style="color:var(--text-muted);" data-i18n="node_biopod_load">BioPod Active Load</span>
+            <span class="node-power text-secondary" id="total-load-val">310W</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-time Power Chart -->
+      <div class="glass-panel" style="padding:20px;">
+        <div class="section-label">
+          <span class="material-symbols-outlined text-[16px] text-tertiary">stacked_line_chart</span>
+          <span data-i18n="sec_power_trend">Microgrid Generation vs BioPod Load Trend (Watts)</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="energyChartCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: LOGS, MQTT CONSOLE & DIAGNOSTICS -->
+    <!-- ========================================================================= -->
+    <div id="tab-logs" class="tab-content">
+      <div class="flex-between" style="margin-bottom:12px;">
+        <div class="section-label" style="margin:0;">
+          <span class="material-symbols-outlined text-[16px] text-primary">terminal</span>
+          <span data-i18n="sec_mqtt_stream">Live MQTT Telemetry & Event Stream</span>
+        </div>
+        <button class="btn-secondary" style="width:auto; padding:6px 14px; font-size:11px;" onclick="exportCSV()" data-i18n="btn_export_csv">
+          <span class="material-symbols-outlined text-[16px]">download</span>
+          <span class="i18n-text">EXPORT CSV TELEMETRY</span>
+        </button>
+      </div>
+
+      <!-- Streaming MQTT Terminal -->
+      <div id="mqtt-terminal" class="terminal-window" style="margin-bottom:20px;">
+        <!-- Streaming logs injected here via JS -->
+      </div>
+
+      <!-- System Diagnostic Summary -->
+      <div class="dashboard-grid dashboard-grid-2col">
+        <div class="glass-panel" style="padding:20px;">
+          <div class="section-label">
+            <span class="material-symbols-outlined text-[16px] text-primary">memory</span>
+            <span data-i18n="sec_node_specs">BioPod Core Node Specification</span>
+          </div>
+
+          <div style="font-family:var(--font-mono); font-size:12px; display:flex; flex-direction:column; gap:8px;">
+            <div class="flex-between">
+              <span style="color:var(--text-muted);" data-i18n="spec_mcu">Microcontroller</span>
+              <span>ESP32 Dual-Core Xtensa LX6 @ 240MHz</span>
+            </div>
+            <div class="flex-between">
+              <span style="color:var(--text-muted);" data-i18n="spec_firmware">Firmware Version</span>
+              <span class="text-primary">BioPod-ESP-v3.4.2-SMP</span>
+            </div>
+            <div class="flex-between">
+              <span style="color:var(--text-muted);" data-i18n="spec_mesh">Mesh Gateway</span>
+              <span>LoRa SX1262 (868MHz) / Wi-Fi Mesh</span>
+            </div>
+            <div class="flex-between">
+              <span style="color:var(--text-muted);" data-i18n="spec_capacity">Storage Capacity</span>
+              <span>2.5 Cubic Meters (~600kg produce)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding:20px;">
+          <div class="section-label">
+            <span class="material-symbols-outlined text-[16px] text-secondary">science</span>
+            <span data-i18n="sec_stress_presets">Quick Stress Simulation Presets</span>
+          </div>
+
+          <div class="scenario-grid">
+            <button class="btn-scenario" onclick="loadScenario('heatwave')">
+              <div class="scenario-title text-tertiary">
+                <span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+                <span data-i18n="scenario_heatwave">Extreme Heatwave</span>
+              </div>
+              <div class="scenario-desc" data-i18n="scenario_heatwave_desc">+38°C ambient thermal spike</div>
+            </button>
+
+            <button class="btn-scenario" onclick="loadScenario('grid_outage')">
+              <div class="scenario-title text-secondary">
+                <span class="material-symbols-outlined text-[18px]">power_off</span>
+                <span data-i18n="scenario_outage">Grid Outage</span>
+              </div>
+              <div class="scenario-desc" data-i18n="scenario_outage_desc">Islanded solar/hydro fallback</div>
+            </button>
+
+            <button class="btn-scenario" onclick="loadScenario('door_open')">
+              <div class="scenario-title text-error">
+                <span class="material-symbols-outlined text-[18px]">meeting_room</span>
+                <span data-i18n="scenario_door">Chamber Door Alert</span>
+              </div>
+              <div class="scenario-desc" data-i18n="scenario_door_desc">Thermal seal breach warning</div>
+            </button>
+
+            <button class="btn-scenario" onclick="loadScenario('ethylene_surge')">
+              <div class="scenario-title text-primary">
+                <span class="material-symbols-outlined text-[18px]">air</span>
+                <span data-i18n="scenario_ethylene">Ethylene Surge</span>
+              </div>
+              <div class="scenario-desc" data-i18n="scenario_ethylene_desc">Trigger catalytic scrubber</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: NORTH EASTERN REGIONAL LANGUAGES SELECTION -->
+  <!-- ========================================================================= -->
+  <div id="language-modal" class="modal-backdrop">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="modal-icon-badge bg-primary/20 text-primary">
+            <span class="material-symbols-outlined">translate</span>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:18px; font-weight:700;" data-i18n="modal_lang_title">
+              North Eastern Regional Languages
+            </h3>
+            <div style="font-size:11px; color:var(--text-muted);" data-i18n="modal_lang_subtitle">
+              Select your native North Eastern language for complete dashboard localization & Agri-Voice Assist.
+            </div>
+          </div>
+        </div>
+        <button class="btn-icon" onclick="closeLanguageModal()" style="width:32px; height:32px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Language Cards Grid -->
+        <div class="languages-grid" id="languages-selector-grid">
+          
+          <!-- English -->
+          <div class="lang-card-item active" data-lang="en" onclick="setLanguage('en')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-white/10 text-main">Global & NER</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">English</div>
+            <div class="lang-eng-subtitle">Standard Dialect • All Regions</div>
+            <div class="lang-preview-sample">"Chamber Temperature Optimal"</div>
+          </div>
+
+          <!-- Assamese -->
+          <div class="lang-card-item" data-lang="as" onclick="setLanguage('as')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-primary/20 text-primary">Assam</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">অসমীয়া</div>
+            <div class="lang-eng-subtitle">Assamese • Brahmaputra Valley</div>
+            <div class="lang-preview-sample">"শীতল ভঁৰালৰ উষ্ণতা উপযুক্ত অৱস্থাত আছে"</div>
+          </div>
+
+          <!-- Khasi -->
+          <div class="lang-card-item" data-lang="kha" onclick="setLanguage('kha')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-secondary/20 text-secondary">Meghalaya</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">Ka Ktien Khasi</div>
+            <div class="lang-eng-subtitle">Khasi • Khasi Hills (Node 04)</div>
+            <div class="lang-preview-sample">"Ka jingshit kamra ka biang bha ia ki marrep"</div>
+          </div>
+
+          <!-- Garo -->
+          <div class="lang-card-item" data-lang="grx" onclick="setLanguage('grx')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-secondary/20 text-secondary">Meghalaya</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">A·chik Ku·sik</div>
+            <div class="lang-eng-subtitle">Garo • Garo Hills</div>
+            <div class="lang-preview-sample">"Chamber-ni ding·a cha·anina kra·a"</div>
+          </div>
+
+          <!-- Manipuri -->
+          <div class="lang-card-item" data-lang="mni" onclick="setLanguage('mni')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-tertiary/20 text-tertiary">Manipur</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">মৈতৈলোন্ (Meitei)</div>
+            <div class="lang-eng-subtitle">Manipuri • Imphal Valley</div>
+            <div class="lang-preview-sample">"কোল্ড স্টোরেজগী পুংশিৎ চপ চানা লৈরি"</div>
+          </div>
+
+          <!-- Mizo -->
+          <div class="lang-card-item" data-lang="lus" onclick="setLanguage('lus')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-primary/20 text-primary">Mizoram</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">Mizo ṭawng</div>
+            <div class="lang-eng-subtitle">Mizo • Lushai Hills & Aizawl</div>
+            <div class="lang-preview-sample">"Thlai vawnṭhatna boruak a ṭha tawk e"</div>
+          </div>
+
+          <!-- Nagamese -->
+          <div class="lang-card-item" data-lang="nag" onclick="setLanguage('nag')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-tertiary/20 text-tertiary">Nagaland</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">Nagamese</div>
+            <div class="lang-eng-subtitle">Naga Creole • Kohima & Dimapur</div>
+            <div class="lang-preview-sample">"Godown thanda level ekdam bhal ase"</div>
+          </div>
+
+          <!-- Nepali -->
+          <div class="lang-card-item" data-lang="ne" onclick="setLanguage('ne')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-secondary/20 text-secondary">Sikkim</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">नेपाली</div>
+            <div class="lang-eng-subtitle">Nepali • Sikkim & Hills</div>
+            <div class="lang-preview-sample">"शीत भण्डारको तापक्रम अनुकूल छ"</div>
+          </div>
+
+          <!-- Bodo -->
+          <div class="lang-card-item" data-lang="brx" onclick="setLanguage('brx')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-primary/20 text-primary">Bodoland</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">बड़ो (Boro)</div>
+            <div class="lang-eng-subtitle">Bodo • BTR Assam</div>
+            <div class="lang-preview-sample">"खथायाव फसल दोनथुमनो मोजां दुंथाव दं"</div>
+          </div>
+
+          <!-- Kokborok -->
+          <div class="lang-card-item" data-lang="trp" onclick="setLanguage('trp')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-tertiary/20 text-tertiary">Tripura</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">Kokborok</div>
+            <div class="lang-eng-subtitle">Tripuri • Tripura Hills</div>
+            <div class="lang-preview-sample">"Mungchar ripingna khwlwi kaham tong"</div>
+          </div>
+
+          <!-- Hindi -->
+          <div class="lang-card-item" data-lang="hi" onclick="setLanguage('hi')">
+            <div class="lang-card-header">
+              <span class="lang-state-badge bg-white/10 text-main">National / Mandi</span>
+              <span class="lang-check-icon material-symbols-outlined text-primary">check_circle</span>
+            </div>
+            <div class="lang-native-title">हिन्दी</div>
+            <div class="lang-eng-subtitle">Hindi • All-India Trade</div>
+            <div class="lang-preview-sample">"चैंबर का तापमान फसल के लिए अनुकूलतम है"</div>
+          </div>
+
+        </div>
+
+        <div class="lang-modal-footer" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
+            <span class="material-symbols-outlined text-primary text-[18px]">record_voice_over</span>
+            <span>Agri-Voice Assist natively enabled in all dialects</span>
+          </div>
+          <button class="btn-primary" style="width:auto; padding:8px 24px;" onclick="closeLanguageModal()" data-i18n="lang_btn_apply">
+            APPLY LANGUAGE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: AGRI-AI NEURAL PREDICTION -->
+  <!-- ========================================================================= -->
+  <div id="ai-predict-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="material-symbols-outlined text-primary">psychology</span>
+          <h3 style="font-family:var(--font-display); font-size:18px; font-weight:700;" data-i18n="ai_modal_title">Agri-AI Neural Crop Inference
+          </h3>
+        </div>
+        <button class="btn-icon" onclick="closeAgriAiModal()" style="width:32px; height:32px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+          <span data-i18n="ai_modal_analyzing">Analyzing Crop Target</span>: <strong id="ai-modal-crop-name" class="text-primary">Organic Seed Potato</strong>
+        </div>
+
+        <!-- Scanning Animation Box -->
+        <div id="ai-scan-animation" class="ai-scan-box">
+          <div class="ai-scan-line"></div>
+          <div style="text-align:center; z-index:1;">
+            <div class="pulse-pip" style="margin:0 auto 10px auto; width:12px; height:12px;"></div>
+            <div id="scan-progress-label" style="font-family:var(--font-mono); font-size:12px; color:var(--text-main);" data-i18n="ai_modal_init_scan">
+              Initializing Agri-AI Neural Inference Engine...
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Display Box (Hidden during scan) -->
+        <div id="ai-modal-results" class="hidden">
+          <div class="flex-between" style="margin-bottom:14px;">
+            <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-muted);" data-i18n="ai_modal_conf_score">AI Confidence
+              Score:</span>
+            <span id="ai-conf-score" class="status-badge">98.6%</span>
+          </div>
+
+          <div class="ai-matrix-grid">
+            <div class="ai-matrix-item">
+              <div class="ai-matrix-val text-primary" id="ai-target-temp-modal">4.0°C</div>
+              <div class="ai-matrix-label" data-i18n="ai_optimal_temp">TARGET TEMP</div>
+            </div>
+            <div class="ai-matrix-item">
+              <div class="ai-matrix-val text-secondary" id="ai-target-rh-modal">90%</div>
+              <div class="ai-matrix-label" data-i18n="ai_target_rh">TARGET RH</div>
+            </div>
+            <div class="ai-matrix-item">
+              <div class="ai-matrix-val text-tertiary" id="ai-shelf-life-modal">+120d</div>
+              <div class="ai-matrix-label" data-i18n="ai_modal_shelf_ext">SHELF EXTENSION</div>
+            </div>
+          </div>
+
+          <div
+            style="background:var(--bg-surface-high); border-radius:var(--radius-md); padding:12px; margin-bottom:16px;">
+            <div
+              style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:4px;" data-i18n="ai_modal_advice_title">
+              AGRONOMY BIO-PRESERVATION ADVICE
+            </div>
+            <p id="ai-modal-explanation" style="font-size:13px; color:var(--text-main); line-height:1.5;">
+              Rhizome dormancy mode active. Solanine greening prevented via zero-light dark storage and strictly
+              regulated skin curing humidity.
+            </p>
+          </div>
+
+          <button class="btn-primary" onclick="pushSetpointsToESP32(); closeAgriAiModal();" data-i18n="ai_modal_accept_btn">
+            <span class="material-symbols-outlined">send</span>
+            <span class="i18n-text">ACCEPT & PUSH SETPOINTS TO ESP32</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: STRESS SCENARIO LAUNCHER -->
+  <!-- ========================================================================= -->
+  <div id="scenario-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="material-symbols-outlined text-tertiary">bolt</span>
+          <h3 style="font-family:var(--font-display); font-size:18px; font-weight:700;" data-i18n="scenarios_modal_title">Simulated Stress Test Scenarios
+          </h3>
+        </div>
+        <button class="btn-icon" onclick="closeScenarioModal()" style="width:32px; height:32px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;" data-i18n="scenarios_modal_desc">
+          Inject real-world operational challenges to evaluate autonomous BioPod OS reaction times, power routing, and
+          PID climate regulation.
+        </p>
+
+        <div class="scenario-grid" style="margin-bottom:16px;">
+          <button class="btn-scenario" onclick="loadScenario('heatwave')">
+            <div class="scenario-title text-tertiary">
+              <span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+              <span data-i18n="scenario_heatwave">Extreme Heatwave (+38°C)</span>
+            </div>
+            <div class="scenario-desc" data-i18n="scenario_heatwave_desc">Sudden external thermal spike; elevates solar generation and tests compressor
+              maximum capacity.</div>
+          </button>
+
+          <button class="btn-scenario" onclick="loadScenario('grid_outage')">
+            <div class="scenario-title text-secondary">
+              <span class="material-symbols-outlined text-[18px]">power_off</span>
+              <span data-i18n="scenario_outage">Mains Grid Outage</span>
+            </div>
+            <div class="scenario-desc" data-i18n="scenario_outage_desc">Tests seamless transition to 100% off-grid Solar + Micro-Hydro microgrid mode.
+            </div>
+          </button>
+
+          <button class="btn-scenario" onclick="loadScenario('door_open')">
+            <div class="scenario-title text-error">
+              <span class="material-symbols-outlined text-[18px]">meeting_room</span>
+              <span data-i18n="scenario_door">Chamber Door Left Ajar</span>
+            </div>
+            <div class="scenario-desc" data-i18n="scenario_door_desc">Triggers thermal breach alarm and checks alert dispatch to farmer mobile app.
+            </div>
+          </button>
+
+          <button class="btn-scenario" onclick="loadScenario('ethylene_surge')">
+            <div class="scenario-title text-primary">
+              <span class="material-symbols-outlined text-[18px]">air</span>
+              <span data-i18n="scenario_ethylene">Ethylene Gas Surge</span>
+            </div>
+            <div class="scenario-desc" data-i18n="scenario_ethylene_desc">Simulates accelerated ripening emissions; tests automated UV-C catalytic scrubber
+              trigger.</div>
+          </button>
+
+          <button class="btn-scenario" onclick="loadScenario('monsoon')">
+            <div class="scenario-title text-secondary">
+              <span class="material-symbols-outlined text-[18px]">rainy</span>
+              <span data-i18n="scenario_monsoon">Monsoon Hydro Surge</span>
+            </div>
+            <div class="scenario-desc" data-i18n="scenario_monsoon_desc">Tests micro-hydro high flow rate generation (160W peak) during low solar days.
+            </div>
+          </button>
+
+          <button class="btn-scenario" onclick="loadScenario('reset')">
+            <div class="scenario-title text-main">
+              <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+              <span data-i18n="scenario_reset">Reset to Nominal Baseline</span>
+            </div>
+            <div class="scenario-desc" data-i18n="scenario_reset_desc">Restore all environmental and microgrid variables to optimal baseline.</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: HARDWARE SELF-TEST DIAGNOSTIC -->
+  <!-- ========================================================================= -->
+  <div id="self-test-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="material-symbols-outlined text-secondary">fact_check</span>
+          <h3 style="font-family:var(--font-display); font-size:18px; font-weight:700;" data-i18n="self_test_title">Hardware System Self-Diagnostics
+          </h3>
+        </div>
+        <button class="btn-icon" onclick="closeSelfTestModal()" style="width:32px; height:32px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div style="font-family:var(--font-mono); font-size:13px; margin-bottom:12px;" id="self-test-status" data-i18n="self_test_init">
+          Initiating automated diagnostic check...
+        </div>
+
+        <div class="progress-bar-bg" style="height:10px; margin-bottom:16px;">
+          <div id="self-test-progress" class="progress-bar-fill bg-secondary" style="width:0%;"></div>
+        </div>
+
+        <div
+          style="background:var(--bg-surface-high); border-radius:var(--radius-md); padding:14px; font-family:var(--font-mono); font-size:12px; display:flex; flex-direction:column; gap:6px;">
+          <div class="flex-between"><span>ESP32 Dual-Core CPU</span><span class="text-primary font-bold">PASS
+              [38°C]</span></div>
+          <div class="flex-between"><span>I2C SHT40 Temperature/RH</span><span class="text-primary font-bold">PASS [0.1%
+              Err]</span></div>
+          <div class="flex-between"><span>Electrochemical Ethylene C2H4</span><span class="text-primary font-bold">PASS
+              [Calibrated]</span></div>
+          <div class="flex-between"><span>MPPT Solar Inverter</span><span class="text-primary font-bold">PASS [98.2%
+              Eff]</span></div>
+          <div class="flex-between"><span>LiFePO4 Battery BMS Cells</span><span class="text-primary font-bold">PASS [16S
+              Balanced]</span></div>
+        </div>
+
+        <button class="btn-secondary" style="margin-top:16px;" onclick="closeSelfTestModal()" data-i18n="btn_close_diag">
+          CLOSE DIAGNOSTICS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BOTTOM NAVIGATION BAR -->
+  <!-- ========================================================================= -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-tab="ai-control" onclick="switchTab('ai-control')">
+      <span class="material-symbols-outlined">psychology</span>
+      <span class="nav-label" data-i18n="nav_ai_control">AI Control</span>
+    </button>
+
+    <button class="nav-item" data-tab="climate" onclick="switchTab('climate')">
+      <span class="material-symbols-outlined">thermostat</span>
+      <span class="nav-label" data-i18n="nav_climate">Climate</span>
+    </button>
+
+    <button class="nav-item" data-tab="energy" onclick="switchTab('energy')">
+      <span class="material-symbols-outlined">bolt</span>
+      <span class="nav-label" data-i18n="nav_energy">Energy</span>
+    </button>
+
+    <button class="nav-item" data-tab="logs" onclick="switchTab('logs')">
+      <span class="material-symbols-outlined">database</span>
+      <span class="nav-label" data-i18n="nav_logs">Logs</span>
+    </button>
+  </nav>
+
+  <!-- Application Logic Modules -->
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
