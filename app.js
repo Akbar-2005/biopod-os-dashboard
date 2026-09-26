@@ -6,34 +6,6 @@
 
 // --- Crop Database ---
 const CROP_DATABASE = {
-  naga_chilli: {
-    name: "Naga King Chilli (Bhut Jolokia)",
-    origin: "Kohima & Dimapur, Nagaland",
-    category: "High-Value Spices",
-    targetTemp: 7.5,
-    targetRH: 85,
-    shelfLifeDays: "+45d",
-    co2Tolerance: 1800,
-    ethyleneSensitivity: "Medium",
-    spoilageRisk: "Low (5%)",
-    confidence: 97.4,
-    image: "assets/naga_chilli.jpg",
-    bioNotes: "Capsaicin crystal stability protocol active. Low condensation misting prevents fruit fungal spot while preserving Scoville heat units (1,000,000+ SHU)."
-  },
-  mushroom: {
-    name: "Oyster Mushroom (Pleurotus)",
-    origin: "Shillong, Meghalaya",
-    category: "Perishable Fungi",
-    targetTemp: 2.0,
-    targetRH: 92,
-    shelfLifeDays: "+18d",
-    co2Tolerance: 750,
-    ethyleneSensitivity: "High",
-    spoilageRisk: "High (22%)",
-    confidence: 95.8,
-    image: "assets/mushroom.jpg",
-    bioNotes: "Extreme CO2 sensitivity. Continuous cross-flow air exchange (1800 RPM) prevents cap spore rot and weight desiccation."
-  },
   potato: {
     name: "Organic Seed Potato",
     origin: "Tawang, Arunachal Pradesh",
@@ -47,48 +19,6 @@ const CROP_DATABASE = {
     confidence: 98.6,
     image: "assets/potato.png",
     bioNotes: "Rhizome dormancy mode active. Solanine greening prevented via zero-light dark storage and strictly regulated skin curing humidity."
-  },
-  cabbage: {
-    name: "Fresh Green Cabbage",
-    origin: "East Khasi Hills, Meghalaya",
-    category: "Cruciferous Vegetables",
-    targetTemp: 0.5,
-    targetRH: 96,
-    shelfLifeDays: "+60d",
-    co2Tolerance: 2400,
-    ethyleneSensitivity: "Medium",
-    spoilageRisk: "Low (7%)",
-    confidence: 96.9,
-    image: "assets/cabbage.png",
-    bioNotes: "Ultra-high humidity preserves head firmness and prevents leaf chlorosis. Continuous low-temp chilling prevents core decay."
-  },
-  tomato: {
-    name: "Ripe Red Tomatoes",
-    origin: "Barapani Valley, Meghalaya",
-    category: "Solanaceous Fruits",
-    targetTemp: 12.0,
-    targetRH: 88,
-    shelfLifeDays: "+21d",
-    co2Tolerance: 1400,
-    ethyleneSensitivity: "Very High",
-    spoilageRisk: "Moderate (18%)",
-    confidence: 94.2,
-    image: "assets/tomato.png",
-    bioNotes: "High ethylene emissions. UV-C scrubber cycle active to catalyze C2H4 decomposition and prevent premature softening."
-  },
-  ginger: {
-    name: "Fresh Raw Ginger (Nadia Variety)",
-    origin: "Karbi Anglong, Assam",
-    category: "Medicinal Rhizomes",
-    targetTemp: 13.0,
-    targetRH: 75,
-    shelfLifeDays: "+90d",
-    co2Tolerance: 2000,
-    ethyleneSensitivity: "Low",
-    spoilageRisk: "Very Low (4%)",
-    confidence: 98.1,
-    image: "assets/ginger.jpg",
-    bioNotes: "Sprout inhibition humidity ceiling active. Prevents rhizome shriveling while preserving pungent gingerol essential oils."
   }
 };
 

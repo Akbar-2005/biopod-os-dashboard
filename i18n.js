@@ -1686,71 +1686,6 @@ const LOCALIZED_CROPS = {
     brx: { name: "जैविक थासों बेगर", category: "रोदाआरि फसल", origin: "तावांग, अरुणाचल प्रदेश", bioNotes: "थासों बेगरखौ गोथां जानाय आरो बेगर ओंखारनायनिफ्राय रैखाथि खालामनो खोमसि खथायाव मोजां सिदोबजों दोनथुमनाय जादों।" },
     trp: { name: "Organic Tha Bwrwi", category: "Tha Bwrwi Mungchar", origin: "Tawang, Arunachal Pradesh", bioNotes: "Tha bwrwino thwisa khlai ya khorok gari ya andalo twi-huk rina riping tong." },
     hi: { name: "जैविक बीज आलू", category: "कंदमूल एवं जड़ें", origin: "तवांग, अरुणाचल प्रदेश", bioNotes: "प्रसुप्ति मोड सक्रिय। शून्य-प्रकाश भंडारण और नियंत्रित आर्द्रता द्वारा सोलेनाइन हरियाली और अंकुरण को पूर्णतः रोका गया है।" }
-  },
-  naga_chilli: {
-    en: { name: "Naga King Chilli (Bhut Jolokia)", category: "High-Value Spices", origin: "Kohima & Dimapur, Nagaland", bioNotes: "Capsaicin crystal stability protocol active. Low condensation misting prevents fruit fungal spot while preserving Scoville heat units (1,000,000+ SHU)." },
-    as: { name: "ভোট জলকীয়া (Bhut Jolokia)", category: "উচ্চ মূল্যৰ মচলা", origin: "কহিমা আৰু ডিমাপুৰ, নাগালেণ্ড", bioNotes: "কেপচাইচিন স্থিৰতা প্ৰট'কল সক্ৰিয়। নিয়ন্ত্রিত কুঁৱলীয়ে জলকীয়াৰ দাগ পৰা ৰোধ কৰে আৰু জলা গুণ (১,০০০,০০০+ SHU) অক্ষুণ্ণ ৰাখে।" },
-    kha: { name: "U Sohmynken Raja / Bhut Jolokia", category: "Ki Jingthung Spices Ba Kordor", origin: "Kohima & Dimapur, Nagaland", bioNotes: "Ka jingpynsah ia ka jingsat Capsaicin ka treikam. Ka jingpynjaw um ba rit ka iada na ka jingthoh dait bad pynsah ia ka jingsat kaba palat 1,000,000 SHU." },
-    grx: { name: "Nagani Jalik / Bhut Jolokia", category: "Gamchatbegipa Sam-Masa", origin: "Kohima & Dimapur, Nagaland", bioNotes: "Capsaicin bilko rakkiani protocol kam ka·enga. Miting ka·e chisoatani a·sel soani jokatgija 1,000,000+ SHU jalgipako rakkia." },
-    mni: { name: "উমোরোক (Bhut Jolokia)", category: "মলূং লৈবা মশলা", origin: "কোহিমা অমসুং দিমাপুর, নাগাল্যান্ড", bioNotes: "উমোরোক্কী মশা অদু কাইহন্দনবা অমসুং য়াম্না শাওবা মতৌ (১,০০০,০০০+ SHU) লেপ্নবা অখন্নবা চিংশিৎকী ফিভমদা থম্লি।" },
-    lus: { name: "Hmarchapui (Bhut Jolokia)", category: "Spices Hlu Tak", origin: "Kohima & Dimapur, Nagaland", bioNotes: "Capsaicin tisa tiṭha reng turin enkawl a ni a, hrik thlai ven nan daidahna zangkhaiah dah niin a thak dan (1,000,000+ SHU) a vawng reng a ni." },
-    nag: { name: "Naga King Chilli / Bhut Jolokia", category: "High-Value Spice", origin: "Kohima & Dimapur, Nagaland", bioNotes: "Capsaicin heat 1,000,000+ SHU maintain kori ase, patla misting se chilli te fungus poribo nadibo." },
-    ne: { name: "डल्ले / राजा खुर्सानी (भूत जोलोकिया)", category: "उच्च मूल्यवान मसला", origin: "कोहिमा र दिमापुर, नागाल्याण्ड", bioNotes: "क्याप्साइसिनको पिरोपन (१० लाख+ SHU) जोगाउन र ढुसी लाग्न नदिन विशेष आर्द्रता नियन्त्रण प्रणाली सक्रिय छ।" },
-    brx: { name: "राजा फिबौ / भुत जोलोकिया", category: "गोनांथि मुलि-मसाला", origin: "कोहिमा आरो दिमापुर, नागालेण्ड", bioNotes: "फिबौनि खायस्रा गोहोखौ (१,०००,०००+ SHU) लाखिनो आरो मैला नांनायनिफ्राय बासायनो सिदोब खन्थ्रोल खालामनाय जादों।" },
-    trp: { name: "Mosodeng Kwchang (Bhut Jolokia)", category: "Kwbang Rango Mosodeng", origin: "Kohima & Dimapur, Nagaland", bioNotes: "Mosodengni kwsa 1,000,000+ SHU rakkina twi-phuk rina fungal spot champeng tong." },
-    hi: { name: "नागा किंग मिर्च / भूत जोलोकिया", category: "उच्च-मूल्य मसाले", origin: "कोहिमा एवं दीमापुर, नागालैंड", bioNotes: "कैप्साइसिन क्रिस्टल स्थिरता प्रोटोकॉल सक्रिय। कम-संघनन मिस्टिंग फलों में फफूंद धब्बों को रोकती है और तीखापन (10 लाख+ SHU) सुरक्षित रखती है।" }
-  },
-  mushroom: {
-    en: { name: "Oyster Mushroom (Pleurotus)", category: "Perishable Fungi", origin: "Shillong, Meghalaya", bioNotes: "Extreme CO2 sensitivity. Continuous cross-flow air exchange (1800 RPM) prevents cap spore rot and weight desiccation." },
-    as: { name: "অইষ্টাৰ কাঠফুলা (Pleurotus)", category: "শীঘ্ৰে বিনষ্টশীল ভেঁকুৰ", origin: "শ্বিলং, মেঘালয়", bioNotes: "CO2 গেছৰ প্ৰতি অতি সংবেদনশীল। অহৰহ বায়ু চলাচলৰ (১৮০০ RPM) জৰিয়তে কাঠফুলা পচি যোৱা আৰু শুকাই ওজন কমি যোৱা ৰোধ কৰা হয়।" },
-    kha: { name: "Tit Dkhiew / Tit Shilliang", category: "Ki Tit Ba Kloi Ban Sniew", origin: "Shillong, Meghalaya", bioNotes: "Kylliang bha ia ka CO2. Ka jingpynphriang lyer (1800 RPM) ka iada na ka jingpyut u tit bad pynneh ia ka jingthew jong u." },
-    grx: { name: "Me·gamu Me·mang (Oyster)", category: "Baktap Sogipa Me·gamu", origin: "Shillong, Meghalaya", bioNotes: "CO2 biba-na kenchakgipa. Continuous balwa balatani (1800 RPM) a·sel cap soani aro rani-ko champenga." },
-    mni: { name: "উয়েন / ওয়েস্টার মাশরুম", category: "থেংনা মাংবা য়াবা ফঙ্গাই", origin: "শিলং, মেঘালয়", bioNotes: "CO2 গ্যাসতা য়াম্না কিকপনা অহিংবা হৱা ফ্যাননা (১৮০০ RPM) শীজিন্নদুনা মাশরুম পুম্বা অমসুং হন্থবা য়াহন্দে।" },
-    lus: { name: "Pa / Oyster Mushroom", category: "Chhe Hma Chi", origin: "Shillong, Meghalaya", bioNotes: "CO2 boruak hlau tak a ni a, boruak vir (1800 RPM) hmangin a zik tawih tur leh a rihna kiam tur ven a ni." },
-    nag: { name: "Oyster Kathfula (Pleurotus)", category: "Perishable Mushroom", origin: "Shillong, Meghalaya", bioNotes: "CO2 bisi thakile bea hoi jai, etu karne 1800 RPM cross fan se hawa di ase taate fungus rot nohoi." },
-    ne: { name: "कन्या च्याउ (अइस्टर च्याउ)", category: "चाँडै बिग्रिने च्याउ", origin: "शिलोङ, मेघालय", bioNotes: "CO2 प्रति निकै संवेदनशील। लगातार हावा संचलन (१८०० RPM) मार्फत च्याउको छाता कुहिनबाट र तौल घट्नबाट जोगाइन्छ।" },
-    brx: { name: "मुक्रेब / अयस्टार माशरूम", category: "गोख्रै गाज्रि जानाय मुक्रेब", origin: "शिलोंग, मेघालय", bioNotes: "CO2 गेसनिफ्राय गियो। १८०० RPM बार बिरहोनायजों मुक्रेब सेवनाय आरो सिबनायनिफ्राय रैखा खालामनाय जायो।" },
-    trp: { name: "Mwkhwrwng Oyster (Pleurotus)", category: "Khaklainai Mwkhwrwng", origin: "Shillong, Meghalaya", bioNotes: "CO2 na khorok ken. 1800 RPM fan bai noha-no hawa rina mwkhwrwngno bhalo rakkhi tong." },
-    hi: { name: "ढींगरी / ऑयस्टर मशरूम", category: "अति-शीघ्र विनाशी कवक", origin: "शिलांग, मेघालय", bioNotes: "CO2 के प्रति अत्यधिक संवेदनशील। निरंतर क्रॉस-फ्लो वायु संचलन (1800 RPM) छतरी के सड़ने और वजन घटने को रोकता है।" }
-  },
-  cabbage: {
-    en: { name: "Fresh Green Cabbage", category: "Cruciferous Vegetables", origin: "East Khasi Hills, Meghalaya", bioNotes: "Ultra-high humidity preserves head firmness and prevents leaf chlorosis. Continuous low-temp chilling prevents core decay." },
-    as: { name: "সতেজ বন্ধাকবি", category: "ক্ৰুচিফেৰাছ শাক-পাচলি", origin: "পূব খাচী পাহাৰ, মেঘালয়", bioNotes: "উচ্চ আৰ্দ্ৰতাই কবিৰ পাত টান কৰি ৰাখে আৰু হালধীয়া হোৱাৰ পৰা ৰক্ষা কৰে। নিম্ন উষ্ণতাই ভিতৰৰ অংশ পচি যোৱা ৰোধ কৰে।" },
-    kha: { name: "U Kubi Jyrngam", category: "Ki Jhur Kubi", origin: "East Khasi Hills, Meghalaya", bioNotes: "Ka jingtlong ba heh ka pynneh ia ka jingeh u kubi bad ym shah stem ki sla. Ka jingpynkhriat kaba neh ka iada na ka jingpyut shapoh." },
-    grx: { name: "Gital Kobi Tangsek", category: "Cruciferous Sam-Ote", origin: "East Khasi Hills, Meghalaya", bioNotes: "Chisoani bariatani kobi-ko ranta aro bijak rimit-ko champenga. Sin·atani a·sel ning·o soani sokja." },
-    mni: { name: "কোবি মনা (Green Cabbage)", category: "হিদাক-পোথোক কোবি", origin: "ইস্ট খাসি হিলস, মেঘালয়", bioNotes: "অকনবা চিংশিৎনা কোবিগী মনা চপ চানা কনহল্লি অমসুং নোংপান খোম্বা থিংই। কোবিগী মনুং পুম্বদগী কনহল্লি।" },
-    lus: { name: "Zikhlum Hring Ṭha", category: "Hnah Hring Thlai", origin: "East Khasi Hills, Meghalaya", bioNotes: "Daidahna ṭha tak hnuaiah a hnah a hring reng a, a vawh tawk chiah avangin a chhung tawih tur a veng bawk a ni." },
-    nag: { name: "Taja Bandhakopi", category: "Fresh Vegetable", origin: "East Khasi Hills, Meghalaya", bioNotes: "Bisi humidity se bandhakopi fresh thakibo aru paat peela nohoi. Thanda thaka karne bhitor rot nohoi." },
-    ne: { name: "ताजा हरियो बन्दागोभी", category: "क्रुसिफेरस तरकारी", origin: "पूर्वी खासी हिल्स, मेघालय", bioNotes: "उच्च आर्द्रताले बन्दाको ताजगी कायम राख्छ र पात पहेंलो हुन दिँदैन। निरन्तर चिसोले भित्री भाग कुहिन दिँदैन।" },
-    brx: { name: "गोजां बान्धाखपि", category: "मेगं-थायगं बान्धाखपि", origin: "सान्जा खासी पाहाड़, मेघालय", bioNotes: "गोबां सिदोबजों बान्धाखपिखौ गोथां आरो गोरा लाखियो। खम दुंथावा बान्धाखपिनि सिङाव सेवनायनिफ्राय रैखाथि होयो।" },
-    trp: { name: "Kobi Kwthang (Cabbage)", category: "Mungchar Kobi", origin: "East Khasi Hills, Meghalaya", bioNotes: "Kobi-no kwthang rakkina twi-huk rina rwichang tong, te khaklaio khorok thwisa ya." },
-    hi: { name: "ताज़ा हरी पत्तागोभी", category: "क्रूसिफेरस सब्जियां", origin: "पूर्वी खासी हिल्स, मेघालय", bioNotes: "अत्यधिक उच्च आर्द्रता पत्तागोभी के कसाव को बनाए रखती है और पत्तियों को पीला होने से रोकती है। कम तापमान भीतरी सड़न रोकता है।" }
-  },
-  tomato: {
-    en: { name: "Ripe Red Tomatoes", category: "Solanaceous Fruits", origin: "Barapani Valley, Meghalaya", bioNotes: "High ethylene emissions. UV-C scrubber cycle active to catalyze C2H4 decomposition and prevent premature softening." },
-    as: { name: "পকা ৰঙা বিলাহী", category: "ফলজাতীয় পাচলি", origin: "বৰাপানী উপত্যকা, মেঘালয়", bioNotes: "অতিমাত্ৰা ইথিলিন গেছ নিৰ্গমন ঘটে। UV-C শোধকে ইথিলিন ধ্বংস কৰি বিলাহী সোনকালে কোমল আৰু পচি যোৱা ৰোধ কৰে।" },
-    kha: { name: "U Soh-Saw Saw", category: "Ki Soh-Jhur", origin: "Barapani Valley, Meghalaya", bioNotes: "Pynmih gas ethylene kaba bun. Ka kor UV-C ka pynkhuid ia kane ka gas khnang ba u sohsaw un ym jem shula bad pyut kloi." },
-    grx: { name: "Gitchak Bilati / Tomato", category: "Solanaceous Bite", origin: "Barapani Valley, Meghalaya", bioNotes: "Ethylene biba baria. UV-C scrubber C2H4-ko rokgata aro bilati baktap nom·atani aro soani-ko champenga." },
-    mni: { name: "মোরোক খোম্বি (Red Tomato)", category: "উহৈ পোথোক", origin: "বারাপানি ভ্যালি, মেঘালয়", bioNotes: "ইথিলিন গ্যাস য়াম্না থোকই। UV-C স্ক্রবারনা গ্যাস অসি হন্থহন্দুনা বিলাতি অসি মতম চাদনা পুম্বা অমসুং শোম্বদগী কনহল্লি।" },
-    lus: { name: "Tomato Sen Ṭha", category: "Rah Chi", origin: "Barapani Phai, Meghalaya", bioNotes: "Ethylene boruak a tihchhuah tam avangin UV-C khawl hmangin a boruak ṭhalo lak bo reng a ni a, a hmin chhiat thut tur a veng a ni." },
-    nag: { name: "Paka Lal Bilahi (Tomato)", category: "Solanaceous Crop", origin: "Barapani Valley, Meghalaya", bioNotes: "Bisi ethylene gas ulaise. UV-C scrubber se C2H4 gas safa kori dise taate tomato jaldi norom aru bea nohoi." },
-    ne: { name: "पाकेको रातो गोलभेँडा (टमाटर)", category: "फल तरकारी", origin: "बारापानी उपत्यका, मेघालय", bioNotes: "अधिक इथिलिन उत्सर्जन हुन्छ। UV-C स्क्रबरले इथिलिन हटाएर गोलभेँडालाई छिट्टै गल्न र कुहिनबाट बचाउँछ।" },
-    brx: { name: "गोजा बिलाथी (Tomato)", category: "फिथाइ-सामथाइ बिलाथी", origin: "बारापानी भेलि, मेघालय", bioNotes: "गोबां इथिलिन गेस ओंखारो। UV-C स्क्रबारजों गेसखौ साफा खालामनानै बिलाथीखौ गोख्रै गिलायनाय आरो सेवनायनिफ्राय बासायो।" },
-    trp: { name: "Tomato Kchak (Tomato)", category: "Kwthang Mungchar", origin: "Barapani Valley, Meghalaya", bioNotes: "Ethylene gas kwbang phano UV-C scrubber bai C2H4 safa khlai rina tomatono khaklaimani champeng tong." },
-    hi: { name: "पके लाल टमाटर", category: "सोलेनेसियस फल", origin: "बारापानी घाटी, मेघालय", bioNotes: "उच्च एथिलीन उत्सर्जन। UV-C स्क्रबर चक्र एथिलीन को विघटित कर टमाटरों को असमय अत्यधिक मुलायम होने और सड़ने से बचाता है।" }
-  },
-  ginger: {
-    en: { name: "Fresh Raw Ginger (Nadia Variety)", category: "Medicinal Rhizomes", origin: "Karbi Anglong, Assam", bioNotes: "Sprout inhibition humidity ceiling active. Prevents rhizome shriveling while preserving pungent gingerol essential oils." },
-    as: { name: "কেঁচা সতেজ আদা (নাদিয়া জাত)", category: "ঔষধি ৰাইজ'ম", origin: "কাৰ্বি আংলং, অসম", bioNotes: "অংকুৰণ ৰোধক আৰ্দ্ৰতা সক্ৰিয়। ই আদা শুকাই যোৱা আৰু কোঁচ খাই যোৱা ৰোধ কৰি তীক্ষ্ণ জিঞ্জেৰল ঔষধি তেল অক্ষুণ্ণ ৰাখে।" },
-    kha: { name: "U Sying Im (Nadia Variety)", category: "Ki Dawai Thied Sying", origin: "Karbi Anglong, Assam", bioNotes: "Ka jingtlong ba khang ia ka jingmih thied ka treikam. Iada na ka jingran u sying bad pynneh ia ka jingsat bad ka dawai gingerol." },
-    grx: { name: "Gital E·ching (Nadia)", category: "Sam Ja·dil", origin: "Karbi Anglong, Assam", bioNotes: "Cha·prokani champengani chisoani kam ka·enga. E·ching ran·ani aro gingerol tel gimaani-ko champenga." },
-    mni: { name: "শিং / তাজা আদা (নাদিয়া)", category: "হিদাক মরূ পোথোক", origin: "কার্বি আংলং, আসাম", bioNotes: "শিং অসি হৌদনা থম্নবা অখন্নবা চিংশিৎকী ফিভমদা থম্লি। মসিনা শিংগী অচুম্বা মগুণ অমসুং তেল অদু মাংহন্দে।" },
-    lus: { name: "Sawhthing Hring (Nadia Variety)", category: "Damdawi Zung", origin: "Karbi Anglong, Assam", bioNotes: "A ṭo chhuah loh nan daidahna vawn a ni a, a uai chhiat loh nan leh a thakna hriak ṭha a bo loh nan uluk taka vawn a ni." },
-    nag: { name: "Taja Ada (Nadia Variety)", category: "Medicinal Ginger", origin: "Karbi Anglong, Assam", bioNotes: "Ada guti ulaise na thakibo karne humidity set kori ase, gingerol pungent smell aru tel maintain kori ase." },
-    ne: { name: "ताजा काँचो अदुवा (नादिया जात)", category: "औषधीय कन्दमूल", origin: "कार्बी आङ्लोङ, असम", bioNotes: "टुसाउन नदिन उपयुक्त आर्द्रता कायम गरिएको छ। अदुवा ओइलाउनबाट रोक्दै यसको औषधीय जिन्जेरोल तेल सुरक्षित राखिन्छ।" },
-    brx: { name: "गोथां हाजिं (नादिया)", category: "मुलि हाजिं", origin: "कार्बी आंलोंग, आसाम", bioNotes: "बेगर ओंखारनायनिफ्राय रैखाथि होयो। हाजिंनि मुलि आरि तेलखौ लाखिनानै हाजिंखौ गोथां लाखियो।" },
-    trp: { name: "Hasing Kwthang (Nadia Variety)", category: "Sam Hasing", origin: "Karbi Anglong, Assam", bioNotes: "Hasing phano gari ya khlai twi-huk rina gingerol sam-no bhalo rakkhi tong." },
-    hi: { name: "ताज़ा कच्चा अदरक (नादिया किस्म)", category: "औषधीय प्रकंद", origin: "कार्बी आंगलोंग, असम", bioNotes: "अंकुरण-रोधी आर्द्रता सीमा सक्रिय। प्रकंद को सिकुड़ने से रोकती है और तीखे जिंजरॉल आवश्यक तेलों को पूरी तरह सुरक्षित रखती है।" }
   }
 };
 
@@ -1870,8 +1805,8 @@ function applyTranslationsToDOM() {
   // Translate Crop Selector dropdown options
   const cropSelect = document.getElementById('crop-selector');
   if (cropSelect) {
-    const cropKeys = ['potato', 'naga_chilli', 'mushroom', 'cabbage', 'tomato', 'ginger'];
-    const emojis = { potato: '🥔', naga_chilli: '🌶️', mushroom: '🍄', cabbage: '🥬', tomato: '🍅', ginger: '🫚' };
+    const cropKeys = ['potato'];
+    const emojis = { potato: '🥔' };
     
     cropSelect.querySelectorAll('option').forEach(opt => {
       const key = opt.value;
